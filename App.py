@@ -7,17 +7,17 @@ st.set_page_config(page_title="Para mi amor", page_icon="💌")
 MEDIA = Path(__file__).parent / "media"
 
 # Cambia aquí los mensajes y las frases de las fotos.
-CARTA = """Mi amor, ya van cuatro meses y todavía me da una alegría toda boba cuando sé que te voy a ver. Me gusta poder contarte cualquier cosa y terminar riéndome contigo hasta de las bobadas que me pasan.
+CARTA = """Mi Reina Hermosa, ya van cuatro meses y todavía me da una alegría y emoción cuando sé que te voy a ver. Me gusta poder contarte cualquier cosa y terminar riéndome contigo de cualquier cosa de la que hablemos.
 
 Me haces muy feliz. Estaba mirando unas fotos de nosotros y te quería mostrar algo. ❤️"""
 RECUERDOS = [
-    ("salida-1.jpg", "Volvería a ese día", "Si me dijeras que mañana podemos repetir esta salida, ya estaría listo para ir por ti."),
-    ("salida-2.jpg", "Esta me la guardo", "Me gusta que ahora tenga lugares por los que paso y enseguida pienso en ti."),
+    ("salida-1.jpg", "Volvería a ese día", "Si me dijeras que mañana podemos repetir esta salida, ya estaría listo de una para ir por ti."),
+    ("salida-2.jpg", "Para mí este es un gran recuerdo", "Me gusta que ahora tenga lugares por los que paso y enseguida pienso en ti."),
 ]
 PRIMERA_SALIDA = """Mi amor, ¿te acuerdas de ese día? Era la primera vez que salíamos juntos. Cada vez que veo esta foto pienso lo mismo: qué hermosa te ves. No sé si alguna vez te lo dije así, pero quería que lo supieras. ❤️"""
-RAZON = "Porque cuando me pasa algo, así sea la bobada más pequeña del día, ya estoy pensando en cómo te lo voy a contar. Me encanta que seas esa persona para mí."
-SECRETO = "La página estaba arreglada desde el principio… escogieras lo que escogieras, yo terminaba saliendo contigo dos veces. Perdón por semejante manipulación jajaja 🤭"
-DESPEDIDA = "Felices cuatro meses, mi amor. La primera vez que te hice una página estaba pendiente de si me ibas a decir que sí. Hoy ya sé lo rico que es salir contigo y aquí estoy, inventándome otra para volver a invitarte. Qué ganas de verte. Te quiero muchísimo. ❤️"
+RAZON = "Porque cuando me pasa algo, o haya tenido el peor dia de mi vida, ya estoy pensando en que en la noche voy a hablar contigo y se me olvidara todo lo malo."
+SECRETO = "La página estaba arreglada desde el principio… escogieras lo que escogieras, yo terminaba saliendo contigo dos veces 🤭"
+DESPEDIDA = "Felices cuatro meses, mi amor. La primera vez que te conocí no me imaginaba a la increible persona con la que me iba a topar. Qué ganas de verte. Te quiero muchísimo. ❤️"
 
 s = st.session_state
 s.setdefault("pagina", 0)
@@ -214,7 +214,7 @@ elif p in (6, 7):
         st.title("¿Salimos esta semana?")
         nota("Mi amor, esta vez tú eliges. ¿Qué te provoca?")
         clave = "semana"
-        opciones = ["🍝 Ir a cenar", "🍿 Ir a cine", "🕯️ Una noche para los dos"]
+        opciones = ["🍝 Ir a cenar", "🍿 Ir a cine", "🕯️ Una noche para los dos 🤭🥵🥵🥵😏"]
         st.caption("Para la noche juntos pedimos algo rico, ponemos música y nos quedamos junticos.")
     else:
         st.title("¿Quién dijo que era una sola cita?")
@@ -249,7 +249,7 @@ elif p == 9:
 elif p == 10:
     st.title("El día que te pedí el cuadre")
     foto("el-cuadre")
-    nota("Gracias por todos estos meses. Eres la persona más especial que tengo. Ojalá algún día puedas pensar cuánto realmente te amo.")
+    nota("Gracias por todos estos meses. Eres de las personas mas especiales que tengo sofía. Ojalá algún día puedas pensar cuánto realmente te amo.")
     st.html('<div class="corazon-final" aria-label="Corazón" role="img">♥</div>')
     st.button("Volver a abrir mi carta", on_click=s.clear)
 if p:
