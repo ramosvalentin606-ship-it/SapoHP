@@ -9,7 +9,7 @@ st.set_page_config(page_title="Para mi amor", page_icon="💌")
 MEDIA = Path(__file__).parent / "media"
 
 
-# ── 1. TUS MENSAJES ──────────────────────────────────────────
+# ── MENSAJES QUE PUEDES PERSONALIZAR ─────────────────────────
 
 CARTA = """Mi amor, ya van cuatro meses y todavía me da una alegría toda boba cuando sé que te voy a ver. Me gusta poder contarte cualquier cosa y terminar riéndome contigo hasta de las bobadas que me pasan.
 
@@ -17,13 +17,13 @@ Me haces muy feliz. Estaba mirando unas fotos de nosotros y te quería mostrar a
 
 RECUERDOS = [
     (
-        "salida-1.jpg",
+        "salida-1",
         "Volvería a ese día",
         "Si me dijeras que mañana podemos repetir esta salida, "
         "ya estaría listo para ir por ti.",
     ),
     (
-        "salida-2.jpg",
+        "salida-2",
         "Esta me la guardo",
         "Me gusta que ahora tenga lugares por los que paso "
         "y enseguida pienso en ti.",
@@ -50,27 +50,29 @@ DESPEDIDA = (
 )
 
 
-# ── 2. PÁGINAS Y COLORES ─────────────────────────────────────
+# ── ESTADO Y COLORES DE CADA PANTALLA ────────────────────────
 
 s = st.session_state
 s.setdefault("pagina", 0)
 s.setdefault("abiertos", set())
 p = s.pagina
 
-# Cada fila corresponde a una pantalla: dos colores de fondo y un acento.
 PALETAS = [
-    ("#ffc2ce", "#ffc984", "#a02955"),  # Sobre
-    ("#ffd6da", "#e4baff", "#962f61"),  # Carta
+    ("#ffc2ce", "#ffc984", "#a02955"),  # Sobre cerrado
+    ("#ffd6da", "#e4baff", "#962f61"),  # Carta y foto de ustedes
     ("#b8afff", "#ffbad9", "#553987"),  # Video
-    ("#ffcf96", "#ffadbc", "#963854"),  # Primera foto
-    ("#b7eadc", "#dfc3ff", "#405f72"),  # Segunda foto
-    ("#ffc0ba", "#ffd892", "#993c43"),  # Esta semana
-    ("#dac1ff", "#ffce97", "#713565"),  # Segunda cita
-    ("#a9e7dc", "#ffc4db", "#315c62"),  # Resumen
-    ("#ffb4c8", "#cabaff", "#903057"),  # Despedida
+    ("#ffcf96", "#ffadbc", "#963854"),  # Primera salida
+    ("#b7eadc", "#dfc3ff", "#405f72"),  # Segunda salida
+    ("#ffc0ba", "#ffd892", "#993c43"),  # Primera invitación
+    ("#dac1ff", "#ffce97", "#713565"),  # Segunda invitación
+    ("#a9e7dc", "#ffc4db", "#315c62"),  # Resumen de las citas
+    ("#ffb4c8", "#cabaff", "#903057"),  # Sorpresa final
 ]
 
-a, b, tinta = PALETAS[p]
+fondo_a, fondo_b, tinta = PALETAS[p]
+
+
+# ── ESTILOS Y ANIMACIONES ─────────────────────────────────────
 
 css = """
 <style>
@@ -80,18 +82,29 @@ css = """
     background-size: 260% 260%;
     animation: cielo 16s ease-in-out infinite alternate;
 }
-[data-testid="stHeader"] { background: transparent; }
+
+[data-testid="stHeader"] {
+    background: transparent;
+}
+
 .block-container {
     max-width: 34rem;
     padding: 3.6rem 1.3rem 4rem;
 }
+
 h1, h2, h3 {
     font-family: Georgia, serif !important;
     color: var(--t) !important;
     letter-spacing: -.04em;
 }
-h1 { animation: entra .65s both; }
-[data-testid="stCaptionContainer"] { color: #5a4050 !important; }
+
+h1 {
+    animation: entra .65s both;
+}
+
+[data-testid="stCaptionContainer"] {
+    color: #5a4050 !important;
+}
 
 /* Botones */
 div.stButton button {
@@ -106,18 +119,23 @@ div.stButton button {
     box-shadow: 0 6px 15px #61364e24;
     transition: transform .2s, background-position .4s;
 }
+
 div.stButton button:hover {
     transform: translateY(-2px);
     background-position: 100%;
     color: white;
 }
-div.stButton button:active { transform: scale(.97); }
+
+div.stButton button:active {
+    transform: scale(.97);
+}
+
 div.stButton button:focus-visible {
     outline: 3px solid #38233e;
     outline-offset: 3px;
 }
 
-/* Sobre, sello y papel */
+/* Sobre y carta */
 .sobre {
     width: min(255px, 80%);
     height: 150px;
@@ -130,22 +148,26 @@ div.stButton button:focus-visible {
     box-shadow: 0 16px 32px #85234844;
     animation: flotar 3.8s ease-in-out infinite;
 }
+
 .sobre:before, .sobre:after {
     content: "";
     position: absolute;
     inset: 0;
 }
+
 .sobre:before {
     background: linear-gradient(145deg, #ff868e, #d95177);
     clip-path: polygon(0 0, 100% 0, 50% 62%);
     transform-origin: top;
     z-index: 3;
 }
+
 .sobre:after {
     background: linear-gradient(120deg, #ffcfb7, #fa8999);
     clip-path: polygon(0 0, 50% 57%, 100% 0, 100% 100%, 0 100%);
     z-index: 2;
 }
+
 .sello {
     position: absolute;
     z-index: 4;
@@ -156,6 +178,7 @@ div.stButton button:focus-visible {
     line-height: 1;
     animation: latir 1.8s ease-in-out infinite;
 }
+
 .papel {
     position: absolute;
     inset: 10px;
@@ -166,12 +189,13 @@ div.stButton button:focus-visible {
     color: #822b50;
     border-radius: 5px;
 }
+
 .abierto { animation: none; }
 .abierto:before { animation: tapa .65s forwards; }
 .abierto .sello { opacity: 0; }
 .abierto .papel { animation: carta .8s .35s both; }
 
-/* Corazones flotantes y confeti */
+/* Corazones, estrellas y confeti */
 .adorno {
     position: fixed;
     inset: 0;
@@ -179,6 +203,7 @@ div.stButton button:focus-visible {
     pointer-events: none;
     z-index: 0;
 }
+
 .adorno i {
     position: absolute;
     left: var(--x);
@@ -189,7 +214,9 @@ div.stButton button:focus-visible {
     animation: subir var(--dur) var(--delay) linear infinite;
     opacity: .45;
 }
+
 .fiesta { z-index: 6; }
+
 .fiesta i {
     width: 9px;
     height: 16px;
@@ -199,7 +226,6 @@ div.stButton button:focus-visible {
     animation: caer var(--dur) var(--delay) ease-in 1 both;
 }
 
-/* Fotos, video, notas y entradas de las citas */
 .escena {
     position: relative;
     text-align: center;
@@ -208,13 +234,16 @@ div.stButton button:focus-visible {
     letter-spacing: .22em;
     margin: .25rem auto;
 }
+
 .escena span {
     display: inline-block;
     animation: flotar 2.5s ease-in-out infinite alternate;
 }
+
 .escena span:nth-child(2) { animation-delay: -1s; }
 .escena span:nth-child(3) { animation-delay: -1.7s; }
 
+/* Fotos tipo polaroid, video y notas */
 [data-testid="stImage"] img {
     box-sizing: border-box;
     background: #fffaf3;
@@ -223,53 +252,77 @@ div.stButton button:focus-visible {
     box-shadow: 0 10px 20px #48233929;
     animation: foto .85s both;
 }
+
 video {
     border-radius: 16px;
     box-shadow: 0 8px 30px #6544aa55;
     animation: entra .8s both;
 }
+
 [data-testid="stVerticalBlockBorderWrapper"] {
     background: #fff9ebdc;
     border-radius: 18px;
     border: 2px dashed var(--t) !important;
     animation: entra .65s both;
 }
+
 .nota {
-    animation: entra .6s both;
+    color: #402837;
     background: #fffbf1eb;
     padding: 16px 20px;
     border-radius: 4px 22px 22px 22px;
     box-shadow: 0 6px 16px #60394f17;
     white-space: pre-line;
+    animation: entra .6s both;
 }
 
-@keyframes cielo { to { background-position: 100% 80%; } }
+@keyframes cielo {
+    to { background-position: 100% 80%; }
+}
+
 @keyframes entra {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: none; }
 }
+
 @keyframes flotar {
     50% { transform: translateY(-7px) rotate(-2deg); }
 }
-@keyframes latir { 50% { transform: scale(1.22); } }
-@keyframes tapa { to { transform: rotateX(177deg); z-index: 0; } }
-@keyframes carta { to { transform: translateY(-53px); } }
+
+@keyframes latir {
+    50% { transform: scale(1.22); }
+}
+
+@keyframes tapa {
+    to { transform: rotateX(177deg); z-index: 0; }
+}
+
+@keyframes carta {
+    to { transform: translateY(-53px); }
+}
+
 @keyframes foto {
     from { opacity: 0; transform: translateY(22px) rotate(-5deg); }
     to { opacity: 1; transform: rotate(-1deg); }
 }
+
 @keyframes subir {
     from { transform: translateY(105vh) rotate(-12deg); }
     to { transform: translate(14px, -8vh) rotate(26deg); }
 }
+
 @keyframes caer {
     0% { opacity: 0; transform: translateY(-6vh); }
     6% { opacity: .9; }
     95% { opacity: .85; }
     100% { opacity: 0; transform: translate(28px, 105vh) rotate(400deg); }
 }
+
 @media (prefers-reduced-motion: reduce) {
-    *, *:before, *:after { animation: none !important; transition: none !important; }
+    *, *:before, *:after {
+        animation: none !important;
+        transition: none !important;
+    }
     .adorno { display: none; }
     .abierto:before { visibility: hidden; }
     .abierto .papel { transform: translateY(-53px); }
@@ -278,13 +331,40 @@ video {
 """
 
 st.html(
-    css.replace("var(--a)", a)
-       .replace("var(--b)", b)
-       .replace("var(--t)", tinta)
+    css.replace("var(--a)", fondo_a)
+    .replace("var(--b)", fondo_b)
+    .replace("var(--t)", tinta)
 )
 
 
-# ── 3. ANIMACIONES Y NAVEGACIÓN ──────────────────────────────
+# ── ARCHIVOS, ANIMACIONES Y BOTONES ──────────────────────────
+
+def buscar_media(nombre, extensiones):
+    """Encuentra un archivo en media/ aunque su extensión esté en mayúsculas."""
+    if not MEDIA.is_dir():
+        return None
+
+    base = Path(nombre).stem.casefold()
+
+    for archivo in sorted(MEDIA.iterdir()):
+        if (
+            archivo.is_file()
+            and archivo.stem.casefold() == base
+            and archivo.suffix.casefold() in extensiones
+        ):
+            return archivo
+
+    return None
+
+
+def foto(nombre):
+    ruta = buscar_media(nombre, {".jpg", ".jpeg"})
+
+    if ruta:
+        st.image(str(ruta), use_container_width=True)
+    else:
+        st.info(f"Agrega la foto {nombre} en formato JPG o JPEG a media/.")
+
 
 def particulas(fiesta=False):
     rng = Random(40 + p)
@@ -306,10 +386,8 @@ def particulas(fiesta=False):
         piezas.append(f'<i style="{estilo}">{simbolo}</i>')
 
     clase = "adorno fiesta" if fiesta else "adorno"
-    st.html(
-        f'<div class="{clase}" aria-hidden="true">'
-        f'{"".join(piezas)}</div>'
-    )
+    contenido = "".join(piezas)
+    st.html(f'<div class="{clase}" aria-hidden="true">{contenido}</div>')
 
 
 def nota(texto):
@@ -321,7 +399,8 @@ def sobre(abierto=False):
     st.html(
         f'<div class="{clase}" aria-hidden="true">'
         '<div class="papel">Para mi amor</div>'
-        '<span class="sello">♥</span></div>'
+        '<span class="sello">♥</span>'
+        '</div>'
     )
 
 
@@ -331,16 +410,11 @@ def ir(destino):
 
 def seguir(texto):
     st.button(
-        texto, on_click=ir, args=(p + 1,), use_container_width=True
+        texto,
+        on_click=ir,
+        args=(p + 1,),
+        use_container_width=True,
     )
-
-
-def foto(nombre):
-    ruta = MEDIA / nombre
-    if ruta.is_file():
-        st.image(str(ruta), use_container_width=True)
-    else:
-        st.info(f"Tu foto va aquí · media/{nombre}")
 
 
 def elegir(clave, opcion):
@@ -351,6 +425,8 @@ def elegir(clave, opcion):
 def revelar(clave):
     s.abiertos = s.abiertos | {clave}
 
+
+# ── RECORRIDO DE LA CARTA ─────────────────────────────────────
 
 particulas()
 
@@ -363,59 +439,73 @@ if p >= 2:
     st.html(f'<div class="escena" aria-hidden="true">{figuras}</div>')
 
 
-# ── 4. EL RECORRIDO QUE VERÁ ELLA ────────────────────────────
-
 if p == 0:
     st.title("Para mi amor")
     sobre()
     seguir("Abrir mi carta 💌")
 
+
 elif p == 1:
     sobre(abierto=True)
-    foto("nosotros.jpg")
+    foto("nosotros")
     nota(CARTA)
     seguir("Mira lo que encontré →")
 
+
 elif p == 2:
     st.title("Dale play, mi amor")
-    video = MEDIA / "recuerdo.mp4"
+    video = buscar_media("recuerdo", {".mp4"})
 
-    if video.is_file():
+    if video:
         st.video(str(video))
     else:
-        st.info("Tu video va aquí · media/recuerdo.mp4")
+        st.info("Agrega recuerdo.mp4 a la carpeta media/.")
 
     seguir("Ver nuestras fotos →")
 
+
 elif p in (3, 4):
     nombre, titulo, frase = RECUERDOS[p - 3]
+
     st.title(titulo)
     foto(nombre)
     nota(frase)
-    seguir("Una más →" if p == 3 else "Tengo una pregunta para ti →")
+
+    if p == 3:
+        seguir("Una más →")
+    else:
+        seguir("Tengo una pregunta para ti →")
+
 
 elif p in (5, 6):
     if p == 5:
         st.title("¿Salimos esta semana?")
         nota("Mi amor, esta vez tú eliges. ¿Qué te provoca?")
+
         clave = "semana"
         opciones = [
             "🍝 Ir a cenar",
             "🍿 Ir a cine",
             "🕯️ Una noche para los dos",
         ]
+
         st.caption(
             "Para la noche juntos pedimos algo rico, "
             "ponemos música y nos quedamos junticos."
         )
+
     else:
         st.title("¿Quién dijo que era una sola cita?")
         nota(
             "Quiero guardar otro día para ti, de aquí a fin de noviembre "
             "o en diciembre. ¿Qué te gustaría?"
         )
+
         clave = "especial"
-        opciones = ["🥂 Una cena especial", "🎻 Un concierto Candlelight"]
+        opciones = [
+            "🥂 Una cena especial",
+            "🎻 Un concierto Candlelight",
+        ]
 
     for opcion in opciones:
         st.button(
@@ -425,17 +515,20 @@ elif p in (5, 6):
             use_container_width=True,
         )
 
+
 elif p == 7:
     st.title("Nos debemos dos citas")
 
     with st.container(border=True):
         st.caption("ESTA SEMANA")
         st.subheader(s.semana)
+
         st.caption("FINALES DE NOVIEMBRE O DICIEMBRE")
         st.subheader(s.especial)
 
     st.caption("Mi amor, mándame una captura para saber qué escogiste 🤭")
     seguir("Antes de irte…")
+
 
 else:
     st.title("¿Qué quieres saber primero?")
@@ -450,6 +543,7 @@ else:
             args=(clave,),
             use_container_width=True,
         )
+
         if clave in s.abiertos:
             nota(mensaje)
 
@@ -458,6 +552,7 @@ else:
         st.subheader("Una última cosita, mi amor")
         nota(DESPEDIDA)
         st.button("Volver a abrir mi carta", on_click=s.clear)
+
 
 if p:
     st.button("← Volver", on_click=ir, args=(p - 1,))
