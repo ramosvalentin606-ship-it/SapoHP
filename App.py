@@ -148,7 +148,7 @@ def revelar(clave):
 def musica():
     if p == 2:
         return  # El video tiene su propio audio.
-    pista = "por-si-manana-no-estoy" if p == 5 else "buenos-dias"
+        pista = "por-si-manana-no-estoy" if p >= 5 else "buenos-dias"
     ruta = buscar_media(pista, {".mp3"})
     if ruta:
         with st.container(key="musica_" + pista):
