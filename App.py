@@ -117,6 +117,8 @@ def sobre(abierto=False):
     st.html(f'<div class="{clase}" aria-hidden="true"><div class="papel">Para mi amor</div><span class="sello">♥</span></div>')
 
 def ir(destino):
+    if destino != s.pagina and (destino == 5 or s.pagina == 5):
+        s.pop("pista", None)
     s.pagina = destino
 
 def seguir(texto):
@@ -145,6 +147,23 @@ def elegir(clave, opcion):
 def revelar(clave):
     s.abiertos = s.abiertos | {clave}
 
+def musica():
+    canciones = {
+        "Buenos Días": buscar_media("buenos-dias", {".mp3"}),
+        "Por Si Mañana No Estoy": buscar_media("por-si-manana-no-estoy", {".mp3"}),
+    }
+    disponibles = [nombre for nombre, ruta in canciones.items() if ruta]
+    if not disponibles or p == 2:
+        return
+    favorita = "Por Si Mañana No Estoy" if p == 5 else "Buenos Días"
+    if s.get("pista") not in disponibles:
+        s.pista = favorita if favorita in disponibles else disponibles[0]
+    with st.expander("♫ Una canción para esta foto" if p == 5 else "♫ Música de la carta", expanded=p in (0, 5)):
+        pista = st.selectbox("Elige la canción", disponibles, key="pista")
+        st.audio(str(canciones[pista]), format="audio/mpeg", loop=True)
+
+
+musica()
 particulas()
 if p >= 2:
     iconos = ["", "", "✧🎞✧", "✿♡✿", "✧♡✧", "✧♥✧", "♡✉♡", "✦🕯✦", "✧🎟✧", "✦♥✦"]
