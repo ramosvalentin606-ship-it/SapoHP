@@ -30,7 +30,7 @@ PALETAS = [
     ("#b8afff", "#ffbad9", "#553987"), ("#ffcf96", "#ffadbc", "#963854"),
     ("#b7eadc", "#dfc3ff", "#405f72"), ("#ffcbd5", "#ffe8ac", "#92365b"), ("#ffc0ba", "#ffd892", "#993c43"),
     ("#dac1ff", "#ffce97", "#713565"), ("#a9e7dc", "#ffc4db", "#315c62"),
-    ("#ffb4c8", "#cabaff", "#903057"),
+    ("#ffb4c8", "#cabaff", "#903057"), ("#ffd6dc", "#ffd8ad", "#95274c"),
 ]
 a, b, tinta = PALETAS[p]
 css = """
@@ -79,6 +79,7 @@ video{border-radius:16px;box-shadow:0 8px 30px #6544aa55;animation:entra .8s bot
 border:2px dashed var(--t)!important;animation:entra .65s both}
 .nota{animation:entra .6s both;background:#fffbf1eb;padding:16px 20px;
 border-radius:4px 22px 22px 22px;box-shadow:0 6px 16px #60394f17;white-space:pre-line}
+.corazon-final{text-align:center;color:#c32652;font:clamp(6rem,28vw,9rem)/1 Georgia,serif;margin:1rem auto 2rem;animation:latir 2.8s ease-in-out infinite}
 @keyframes cielo{to{background-position:100% 80%}}
 @keyframes entra{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes flotar{50%{transform:translateY(-7px) rotate(-2deg)}}
@@ -175,7 +176,7 @@ def musica():
 
 musica()
 particulas()
-if p >= 2:
+if 2 <= p <= 9:
     iconos = ["", "", "✧🎞✧", "✿♡✿", "✧♡✧", "✧♥✧", "♡✉♡", "✦🕯✦", "✧🎟✧", "✦♥✦"]
     st.html('<div class="escena" aria-hidden="true">' +
             "".join(f"<span>{icono}</span>" for icono in iconos[p]) + "</div>")
@@ -231,7 +232,7 @@ elif p == 8:
         st.subheader(s.especial)
     st.caption("Mi amor, mándame una captura para saber qué escogiste 🤭")
     seguir("Antes de irte…")
-else:
+elif p == 9:
     st.title("¿Qué quieres saber primero?")
     for clave, etiqueta, mensaje in [
         ("razon", "❤️ Una razón por la que me gustas", RAZON),
@@ -244,6 +245,12 @@ else:
         particulas(fiesta=True)
         st.subheader("Una última cosita, mi amor")
         nota(DESPEDIDA)
-        st.button("Volver a abrir mi carta", on_click=s.clear)
+        seguir("Me falta mostrarte una foto ♡")
+elif p == 10:
+    st.title("El día que te pedí el cuadre")
+    foto("el-cuadre")
+    nota("Gracias por todos estos meses. Eres la persona más especial que tengo. Ojalá algún día puedas pensar cuánto realmente te amo.")
+    st.html('<div class="corazon-final" aria-label="Corazón" role="img">♥</div>')
+    st.button("Volver a abrir mi carta", on_click=s.clear)
 if p:
     st.button("← Volver", on_click=ir, args=(p - 1,))
