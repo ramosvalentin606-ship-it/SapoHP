@@ -16,7 +16,7 @@ RECUERDOS = [
 ]
 PRIMERA_SALIDA = """Mi amor, ¿te acuerdas de ese día? Era la primera vez que salíamos juntos. Cada vez que veo esta foto pienso lo mismo: qué hermosa te ves. No sé si alguna vez te lo dije así, pero quería que lo supieras, pero ese dia no sabia como actuar jajajaja. ❤️"""
 RAZON = "Porque cuando me pasa algo, o haya tenido el peor dia de mi vida, ya estoy pensando en que en la noche voy a hablar contigo y se me olvidara todo lo malo."
-SECRETO = "La página estaba arreglada desde el principio… escogieras lo que escogieras, yo terminaba saliendo contigo dos veces 🤭"
+SECRETO = "Me gusta tu soplatierra 🤭"
 DESPEDIDA = "Felices cuatro meses, mi amor. La primera vez que te conocí no me imaginaba a la increible persona con la que me iba a topar. Qué ganas de verte. Te quiero muchísimo. ❤️"
 
 s = st.session_state
