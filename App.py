@@ -117,8 +117,6 @@ def sobre(abierto=False):
     st.html(f'<div class="{clase}" aria-hidden="true"><div class="papel">Para mi amor</div><span class="sello">♥</span></div>')
 
 def ir(destino):
-    if destino != s.pagina and (destino == 5 or s.pagina == 5):
-        s.pop("pista", None)
     s.pagina = destino
 
 def seguir(texto):
@@ -148,19 +146,31 @@ def revelar(clave):
     s.abiertos = s.abiertos | {clave}
 
 def musica():
-    canciones = {
-        "Buenos Días": buscar_media("buenos-dias", {".mp3"}),
-        "Por Si Mañana No Estoy": buscar_media("por-si-manana-no-estoy", {".mp3"}),
-    }
-    disponibles = [nombre for nombre, ruta in canciones.items() if ruta]
-    if not disponibles or p == 2:
-        return
-    favorita = "Por Si Mañana No Estoy" if p == 5 else "Buenos Días"
-    if s.get("pista") not in disponibles:
-        s.pista = favorita if favorita in disponibles else disponibles[0]
-    with st.expander("♫ Una canción para esta foto" if p == 5 else "♫ Música de la carta", expanded=p in (0, 5)):
-        pista = st.selectbox("Elige la canción", disponibles, key="pista")
-        st.audio(str(canciones[pista]), format="audio/mpeg", loop=True)
+    if p == 2:
+        return  # El video tiene su propio audio.
+    pista = "por-si-manana-no-estoy" if p == 5 else "buenos-dias"
+    ruta = buscar_media(pista, {".mp3"})
+    if ruta:
+        with st.container(key="musica_" + pista):
+            st.audio(str(ruta), format="audio/mpeg", autoplay=True, loop=True)
+        if p == 0:
+            # Reintenta en el mismo toque que abre la carta si el móvil bloqueó el inicio.
+            import streamlit.components.v1 as components
+            components.html("""
+                <script>
+                try {
+                    const doc = window.parent.document;
+                    const abrir = event => {
+                        const boton = event.target.closest("button");
+                        if (!boton || !boton.textContent.includes("Abrir mi carta")) return;
+                        const audio = doc.querySelector(".st-key-musica_buenos-dias audio");
+                        if (audio && audio.paused) audio.play().catch(() => {});
+                    };
+                    doc.addEventListener("click", abrir, true);
+                    window.addEventListener("pagehide", () => doc.removeEventListener("click", abrir, true));
+                } catch (_) { /* El reproductor nativo sigue disponible. */ }
+                </script>
+            """, height=0)
 
 
 musica()
