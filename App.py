@@ -14,7 +14,7 @@ RECUERDOS = [
     ("salida-1.jpg", "Volvería a ese día", "Si me dijeras que mañana podemos repetir esta salida, ya estaría listo de una para ir por ti."),
     ("salida-2.jpg", "Para mí este es un gran recuerdo", "Me gusta que ahora tenga lugares por los que paso y enseguida pienso en ti."),
 ]
-PRIMERA_SALIDA = """Mi amor, ¿te acuerdas de ese día? Era la primera vez que salíamos juntos. Cada vez que veo esta foto pienso lo mismo: qué hermosa te ves. No sé si alguna vez te lo dije así, pero quería que lo supieras. ❤️"""
+PRIMERA_SALIDA = """Mi amor, ¿te acuerdas de ese día? Era la primera vez que salíamos juntos. Cada vez que veo esta foto pienso lo mismo: qué hermosa te ves. No sé si alguna vez te lo dije así, pero quería que lo supieras, pero ese dia no sabia como actuar jajajaja. ❤️"""
 RAZON = "Porque cuando me pasa algo, o haya tenido el peor dia de mi vida, ya estoy pensando en que en la noche voy a hablar contigo y se me olvidara todo lo malo."
 SECRETO = "La página estaba arreglada desde el principio… escogieras lo que escogieras, yo terminaba saliendo contigo dos veces 🤭"
 DESPEDIDA = "Felices cuatro meses, mi amor. La primera vez que te conocí no me imaginaba a la increible persona con la que me iba a topar. Qué ganas de verte. Te quiero muchísimo. ❤️"
@@ -215,7 +215,7 @@ elif p in (6, 7):
         nota("Mi amor, esta vez tú eliges. ¿Qué te provoca?")
         clave = "semana"
         opciones = ["🍝 Ir a cenar", "🍿 Ir a cine", "🕯️ Una noche para los dos 🤭🥵🥵🥵😏"]
-        st.caption("Para la noche juntos pedimos algo rico, ponemos música y nos quedamos junticos.")
+        st.caption("Si eliges la tercera eres una cochina🫩")
     else:
         st.title("¿Quién dijo que era una sola cita?")
         nota("Quiero guardar otro día para ti, de aquí a fin de noviembre o en diciembre. ¿Qué te gustaría?")
